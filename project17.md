@@ -1,6 +1,6 @@
 # AUTOMATING INFRASTRUCTURE WITH IAC USING TERRAFORM - PART 2
 ## INTRODUCTION
-In continuation to [project 16](https://github.com/somex6/Darey.io-Projects/blob/main/project16.md), the remaining resources are created in this project in order to set up a secured infrastructure with Terraform
+In continuation to [project 16](https://github.com/nicedozie4u/Project16/blob/main/project16.md), the remaining resources are created in this project in order to set up a secured infrastructure with Terraform
 
 ## STEP 1: Creating Private Subnet
 - Due to the AZ of eu-central-1 region is not up to 4 which will return error since it is 4 private subnet that is needed, therefore **random_shuffle** resource is introduced and then specifying the maximum subnet:
@@ -431,20 +431,20 @@ resource "aws_security_group_rule" "inbound-mysql-webserver" {
 ```
 # The entire section create a certiface, public zone, and validate the certificate using DNS method
 
-# Create the certificate using a wildcard for all the domains created in somexdev.ga
-resource "aws_acm_certificate" "somdev" {
-  domain_name       = "*.somdev.ga"
+# Create the certificate using a wildcard for all the domains created in dozbytetech.site
+resource "aws_acm_certificate" "dozbytetech" {
+  domain_name       = "*.dozbytetech.site"
   validation_method = "DNS"
 }
 
 # calling the hosted zone
-data "aws_route53_zone" "somdev" {
-  name         = "somexdev.ga"
+data "aws_route53_zone" "dozbytetech" {
+  name         = "dozbytetech.site"
   private_zone = false
 }
 
 # selecting validation method
-resource "aws_route53_record" "somdev" {
+resource "aws_route53_record" "dozbytetech" {
   for_each = {
     for dvo in aws_acm_certificate.somdev.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
@@ -458,13 +458,13 @@ resource "aws_route53_record" "somdev" {
   records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
-  zone_id         = data.aws_route53_zone.somdev.zone_id
+  zone_id         = data.aws_route53_zone.dozbytetech.zone_id
 }
 
 # validate the certificate through DNS method
-resource "aws_acm_certificate_validation" "somdev" {
-  certificate_arn         = aws_acm_certificate.somdev.arn
-  validation_record_fqdns = [for record in aws_route53_record.somdev : record.fqdn]
+resource "aws_acm_certificate_validation" "dozbytetech" {
+  certificate_arn         = aws_acm_certificate.dozbytetech.arn
+  validation_record_fqdns = [for record in aws_route53_record.dozbytetech : record.fqdn]
 
    timeouts {
     create = "60m"
@@ -473,8 +473,8 @@ resource "aws_acm_certificate_validation" "somdev" {
 
 # create records for tooling
 resource "aws_route53_record" "tooling" {
-  zone_id = data.aws_route53_zone.somdev.zone_id
-  name    = "tooling.somdev.ga"
+  zone_id = data.aws_route53_zone.dozbytetech.zone_id
+  name    = "tooling.dozbytetech.site"
   type    = "A"
 
   alias {
@@ -486,8 +486,8 @@ resource "aws_route53_record" "tooling" {
 
 # create records for wordpress
 resource "aws_route53_record" "wordpress" {
-  zone_id = data.aws_route53_zone.somdev.zone_id
-  name    = "wordpress.somdev.ga"
+  zone_id = data.aws_route53_zone.dozbytetech.zone_id
+  name    = "wordpress.dozbytetech.site"
   type    = "A"
 
   alias {
@@ -677,11 +677,11 @@ resource "aws_lb_listener_rule" "tooling-listener" {
 - Entering the following codes which creates notification for all the auto scaling group:
 ```
 #### creating sns topic for all the auto scaling groups
-resource "aws_sns_topic" "somex-sns" {
+resource "aws_sns_topic" "dozbytetech-sns" {
   name = "Default_CloudWatch_Alarms_Topic"
 }
 
-resource "aws_autoscaling_notification" "somex_notifications" {
+resource "aws_autoscaling_notification" "dozbytetech_notifications" {
   group_names = [
     aws_autoscaling_group.bastion-asg.name,
     aws_autoscaling_group.nginx-asg.name,
@@ -695,7 +695,7 @@ resource "aws_autoscaling_notification" "somex_notifications" {
     "autoscaling:EC2_INSTANCE_TERMINATE_ERROR",
   ]
 
-  topic_arn = aws_sns_topic.somex-sns.arn
+  topic_arn = aws_sns_topic.dozbytetechc-sns.arn
 }
 
 # Create Launch Template for bastion
@@ -1170,7 +1170,7 @@ resource "aws_db_instance" "ACS-rds" {
   engine                 = "mysql"
   engine_version         = "5.7"
   instance_class         = "db.t2.micro"
-  db_name                = "somex"
+  db_name                = "dozie"
   username               = var.master-username
   password               = var.master-password
   parameter_group_name   = "default.mysql5.7"
@@ -1192,4 +1192,4 @@ resource "aws_db_instance" "ACS-rds" {
 ![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project17/apply-7.png)
 ![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project17/apply-8.png)
 
-This [link](https://github.com/somex6/terraform-project17) contains the repo of the codes used in this project 17
+This [link](https://github.com/nicedozie4u/terraform-project17) contains the repo of the codes used in this project 17
