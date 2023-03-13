@@ -16,7 +16,7 @@ resource "random_shuffle" "az_list" {
 resource "aws_subnet" "private" {
   count                   = var.preferred_number_of_private_subnets == null ? length(data.aws_availability_zones.available.names) : var.preferred_number_of_private_subnets
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = cidrsubnet(var.vpc_cidr, 4, count.index)
+  cidr_block              = cidrsubnet(var.vpc_cidr, 8, count.index)
   map_public_ip_on_launch = true
   availability_zone       = random_shuffle.az_list.result[count.index]
 
@@ -981,7 +981,7 @@ yum install -y ansible
 yum install -y nginx
 systemctl start nginx
 systemctl enable nginx
-git clone https://github.com/somex6/ACS-project-config.git
+git clone https://github.com/nicedozie4u/ACS-project-config
 mv /ACS-project-config/reverse.conf /etc/nginx/
 mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf-distro
 cd /etc/nginx/
@@ -1032,7 +1032,7 @@ yum module enable php:remi-7.4 -y
 yum install -y php php-common php-mbstring php-opcache php-intl php-xml php-gd php-curl php-mysqlnd php-fpm php-json
 systemctl start php-fpm
 systemctl enable php-fpm
-git clone https://github.com/Livingstone95/tooling-1.git
+git clone https://github.com/nicedozie4u/tooling-1
 mkdir /var/www/html
 cp -R /tooling-1/html/*  /var/www/html/
 cd /tooling-1
@@ -1059,7 +1059,7 @@ resource "aws_kms_key" "ACS-kms" {
     {
       "Sid": "Enable IAM User Permissions",
       "Effect": "Allow",
-      "Principal": { "AWS": "arn:aws:iam::${var.account_no}:user/somex-terraform" },
+      "Principal": { "AWS": "arn:aws:iam::${var.account_no}:user/dozie-terraform" },
       "Action": "kms:*",
       "Resource": "*"
     }
