@@ -446,7 +446,7 @@ data "aws_route53_zone" "dozbytetech" {
 # selecting validation method
 resource "aws_route53_record" "dozbytetech" {
   for_each = {
-    for dvo in aws_acm_certificate.somdev.domain_validation_options : dvo.domain_name => {
+    for dvo in aws_acm_certificate.dozbytetech.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type
@@ -551,7 +551,7 @@ resource "aws_lb_listener" "nginx-listner" {
   load_balancer_arn = aws_lb.ext-alb.arn
   port              = 443
   protocol          = "HTTPS"
-  certificate_arn   = aws_acm_certificate_validation.somdev.certificate_arn
+  certificate_arn   = aws_acm_certificate_validation.dozbytetech.certificate_arn
 
   default_action {
     type             = "forward"
@@ -644,7 +644,7 @@ resource "aws_lb_listener" "web-listener" {
   load_balancer_arn = aws_lb.ialb.arn
   port              = 443
   protocol          = "HTTPS"
-  certificate_arn   = aws_acm_certificate_validation.somdev.certificate_arn
+  certificate_arn   = aws_acm_certificate_validation.dozbytetech.certificate_arn
 
   default_action {
     type             = "forward"
@@ -665,7 +665,7 @@ resource "aws_lb_listener_rule" "tooling-listener" {
 
   condition {
     host_header {
-      values = ["tooling.somdev.ga"]
+      values = ["tooling.dozbytetech.site"]
     }
   }
 }
