@@ -1183,13 +1183,14 @@ resource "aws_db_instance" "ACS-rds" {
 
 ## STEP 12: Executing Terraform Apply
 
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project17/apply-1.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project17/apply-2.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project17/apply-3.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project17/apply-4.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project17/apply-5.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project17/apply-6.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project17/apply-7.png)
-![](https://github.com/somex6/Darey.io-Projects/blob/main/img/project17/apply-8.png)
+![](./images/terraform%20apply01.png)
+![](./images/terraform%20apply02.png)
+![](./images/terraform%20apply03.png)
+![](./images/terraform%20apply04.png)
+![](./images/terraform%20apply05.png)
+![](./images/terraform%20apply06.png)
+![](./images/terraform%20apply07.png)
+![](./images/terraform%20apply08.png)
+![](./images/terraform%20apply%20final.png)
 
-This [link](https://github.com/nicedozie4u/terraform-project17) contains the repo of the codes used in this project 17
+This [link](https://github.com/nicedozie4u/Project17) contains the repo of the codes used in this project 17
